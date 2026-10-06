@@ -39,7 +39,7 @@ npm --version
 Clone repository kemudian masuk ke direktori project:
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:Andi1987/fleet-management-system.git
 cd <project-directory>
 ```
 
@@ -61,14 +61,6 @@ Setelah berhasil, buka URL yang ditampilkan oleh Vite pada terminal, biasanya:
 
 ```text
 http://localhost:5173
-```
-
-### Production Build
-
-Untuk memastikan aplikasi dapat di-build:
-
-```bash
-npm run build
 ```
 
 ---
