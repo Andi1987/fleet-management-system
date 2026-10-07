@@ -28,11 +28,15 @@ export function ErrorMessage({
 
         <div className="flex-1">
           <h2 className="font-bold text-slate-900">
-            Unable to load vehicle data
+            Terjadi Kesalahan Koneksi API
           </h2>
 
           <p className="mt-1 text-sm leading-6 text-slate-500">
             {message}
+          </p>
+
+          <p className="mt-1 text-xs text-red-500">
+            Batas permintaan API (Rate Limit 429). Mohon tunggu beberapa detik.
           </p>
 
           <button

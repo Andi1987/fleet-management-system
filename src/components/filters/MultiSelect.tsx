@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 export interface MultiSelectOption {
   value: string;
   label: string;
+  secondaryLabel?: string;
 }
 
 interface MultiSelectProps {
@@ -60,14 +61,20 @@ export function MultiSelect({
     };
   }, []);
 
+  const normalizedSearch =
+    search.trim().toLowerCase();
+
   const filteredOptions = options.filter(
     (option) =>
       option.label
         .toLowerCase()
-        .includes(search.toLowerCase()) ||
+        .includes(normalizedSearch) ||
+      option.secondaryLabel
+        ?.toLowerCase()
+        .includes(normalizedSearch) ||
       option.value
         .toLowerCase()
-        .includes(search.toLowerCase()),
+        .includes(normalizedSearch),
   );
 
   const toggleValue = (value: string) => {
@@ -165,7 +172,7 @@ export function MultiSelect({
                 return (
                   <label
                     key={option.value}
-                    className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-slate-50"
+                    className="flex cursor-pointer items-start gap-3 rounded-lg px-3 py-2.5 hover:bg-slate-50"
                   >
                     <input
                       type="checkbox"
@@ -175,11 +182,19 @@ export function MultiSelect({
                           option.value,
                         )
                       }
-                      className="h-4 w-4 rounded border-slate-300"
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300"
                     />
 
-                    <span className="truncate text-sm text-slate-700">
-                      {option.label}
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-semibold text-slate-800">
+                        {option.label}
+                      </span>
+
+                      {option.secondaryLabel && (
+                        <span className="mt-0.5 block truncate text-[11px] font-medium text-slate-400">
+                          {option.secondaryLabel}
+                        </span>
+                      )}
                     </span>
                   </label>
                 );

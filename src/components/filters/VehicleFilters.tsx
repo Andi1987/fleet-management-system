@@ -24,6 +24,30 @@ interface VehicleFiltersProps {
   ) => void;
 }
 
+const getRouteTypeLabel = (
+  type: number | null,
+): string | null => {
+  if (type === 2) {
+    return "Regional Rail";
+  }
+
+  return null;
+};
+
+const getDirectionLabel = (
+  directionId: number | null,
+): string | null => {
+  if (directionId === 0) {
+    return "Arah 1";
+  }
+
+  if (directionId === 1) {
+    return "Arah 2";
+  }
+
+  return null;
+};
+
 export function VehicleFilters({
   selectedRoutes,
   selectedTrips,
@@ -40,24 +64,52 @@ export function VehicleFilters({
 
   const routeOptions =
     routes.routes.map(
-      (route) => ({
-        value: route.id,
-        label:
+      (route) => {
+        const shortName =
+          route.attributes.short_name ??
+          route.id;
+
+        const routeType =
+          getRouteTypeLabel(
+            route.attributes.type,
+          );
+
+        const longName =
           route.attributes.long_name ??
           route.attributes.short_name ??
-          route.id,
-      }),
+          route.id;
+
+        return {
+          value: route.id,
+          label: routeType
+            ? `${shortName} · ${routeType}`
+            : shortName,
+          secondaryLabel: `${longName} · #${route.id}`,
+        };
+      },
     );
 
   const tripOptions =
     trips.trips.map(
-      (trip) => ({
-        value: trip.id,
-        label:
+      (trip) => {
+        const headsign =
           trip.attributes.headsign ??
           trip.attributes.name ??
-          trip.id,
-      }),
+          trip.id;
+
+        const direction =
+          getDirectionLabel(
+            trip.attributes.direction_id,
+          );
+
+        return {
+          value: trip.id,
+          label: direction
+            ? `${headsign} · ${direction}`
+            : headsign,
+          secondaryLabel: `#${trip.id}`,
+        };
+      },
     );
 
   const hasActiveFilters =
@@ -146,11 +198,7 @@ export function VehicleFilters({
         <div className="min-w-0 flex-1">
           <MultiSelect
             label="Trip"
-            placeholder={
-              selectedRoutes.length > 0
-                ? "Pilih Trip"
-                : "Pilih Trip"
-            }
+            placeholder="Pilih Trip"
             options={tripOptions}
             selectedValues={
               selectedTrips
@@ -238,7 +286,7 @@ export function VehicleFilters({
                 key={`route-${selectedRoutes[index]}`}
                 className="inline-flex max-w-full items-center gap-1.5 rounded-lg bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700"
               >
-                <span className="truncate max-w-[180px]">
+                <span className="max-w-[180px] truncate">
                   Route: {label}
                 </span>
 
@@ -271,7 +319,7 @@ export function VehicleFilters({
                 key={`trip-${selectedTrips[index]}`}
                 className="inline-flex max-w-full items-center gap-1.5 rounded-lg bg-violet-50 px-2.5 py-1 text-[11px] font-semibold text-violet-700"
               >
-                <span className="truncate max-w-[180px]">
+                <span className="max-w-[180px] truncate">
                   Trip: {label}
                 </span>
 
@@ -297,7 +345,7 @@ export function VehicleFilters({
 
           {vehicleSearch.trim() && (
             <span className="inline-flex max-w-full items-center gap-1.5 rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
-              <span className="truncate max-w-[180px]">
+              <span className="max-w-[180px] truncate">
                 Search: {vehicleSearch}
               </span>
 

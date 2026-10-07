@@ -344,13 +344,12 @@ function App() {
                 </div>
 
                 <h3 className="mt-4 text-sm font-bold text-slate-800">
-                  Armada tidak ditemukan
+                  Tidak ada armada realtime 
                 </h3>
 
                 <p className="mt-1 max-w-md text-xs leading-5 text-slate-500">
-                  Tidak ada kendaraan yang
-                  sesuai dengan pencarian atau
-                  filter saat ini.
+                  Tidak ada kendaraan aktif yang tersedia untuk
+                  Route atau Trip yang dipilih.
                 </p>
               </div>
             ) : (

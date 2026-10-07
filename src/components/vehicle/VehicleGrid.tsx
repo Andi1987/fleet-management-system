@@ -30,12 +30,13 @@ export function VehicleGrid({
         </div>
 
         <h2 className="mt-5 text-lg font-bold text-slate-900">
-          No vehicles found
+          Tidak ada armada realtime
         </h2>
 
         <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-          No vehicles match the selected filters. Try
-          changing your route or trip selection.
+          Tidak ada kendaraan aktif yang tersedia untuk
+          Route atau Trip yang dipilih. Coba ubah filter
+          atau pilih Route/Trip lainnya.
         </p>
       </div>
     );
